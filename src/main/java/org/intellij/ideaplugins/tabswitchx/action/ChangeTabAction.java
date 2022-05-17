@@ -1,8 +1,8 @@
-package org.intellij.ideaplugins.tabswitch.action;
+package org.intellij.ideaplugins.tabswitchx.action;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.intellij.ideaplugins.tabswitch.filefetcher.FileFetcher;
+import org.intellij.ideaplugins.tabswitchx.filefetcher.FileFetcher;
 
 import java.util.List;
 

@@ -3,19 +3,39 @@ plugins {
 }
 
 group 'org.intellij.ideaplugins'
-version '3.1.0'
+version '3.2.0d'
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     version = '2021.3'
+    updateSinceUntilBuild = false
 }
 
 patchPluginXml {
     changeNotes = """
-    Change default select tab on popup view show<br/>
-    Change prev/next keyboard-shortcut can work with each other<br/>
-    Change to gradle project<br/>
-    Fixed some issues<br/>
+    3.2.0d: Removed max version constraint; now works with IDEA 2022.1.1 and later
+    3.2.0c: Position moved closer to top-center instead of middle-center
+    3.2.0b: Maximum height extended to 30 tabs, after which scrolling is enabled
+    3.2.0: Fork to <b>TabSwitchX</b>
+           - Fix to make switcher dialog work with mouse-wheel scrolling
+    3.1.0: Fork to <b>TabSwitchPlus</b><br/>
+           - Change default select tab on popup view show<br/>
+           - Change prev/next keyboard-shortcut can work with each other<br/>
+           - Change to gradle project<br/>
+           - Fixed some issues<br/>
+    3.0.7: Bug-fix: reverse recent files array _before_ checking their validity do be added to list.<br/>
+    3.0.6: Remove TabSwitch settings. Is not used anymore.<br/>
+    3.0.5: Project is upgraded to use java 7.<br/>
+    3.0.4: When only one file is opened - do not display the TabSwitch list. Also some refactorings.<br/>
+    3.0.3: Lots of code clean ups. Does not display same file in the list twice anymore.<br/>
+    3.0.2: Do not include directories when listing recent VCS changes popup window. Removed light green background color from popup list.<br/>
+    3.0.1: Added new TabSwitch Action to display modified files in the default change list of your VCS. Large refactoring.<br>
+    3.0.0: Fixed bug where it moved two steps down on each move-down-action.<br/>
+    2.2.0: Cleaning up some code.<br>
+    2.1.9: Switch to open tab even if it is located in a different split pane.<br>
+    2.1.8: The TabSwitch actions are now available during background indexing in Maia.<br>
+    2.1.7: Fix for mouse over popup changes selection problem reported by Michael Bushe.<br>
+    2.1.6: RubyMine compatible version.<br><br/>
       """
 }
 

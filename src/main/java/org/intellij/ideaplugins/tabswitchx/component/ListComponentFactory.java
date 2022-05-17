@@ -1,17 +1,16 @@
-package org.intellij.ideaplugins.tabswitch.component;
+package org.intellij.ideaplugins.tabswitchx.component;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.io.File;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.intellij.ideaplugins.tabswitch.TabSwitchProjectComponent;
+import org.intellij.ideaplugins.tabswitchx.TabSwitchProjectComponent;
 import org.jetbrains.annotations.Nullable;
 
 import com.intellij.openapi.editor.markup.EffectType;
@@ -33,12 +32,18 @@ class ListComponentFactory {
     this.project = project;
   }
 
-  JList create(JLabel pathLabel) {
+  public JList create(JLabel pathLabel) {
     JList list = new JBList();
     list.setCellRenderer(new ListCellRendererWithColorFactory().create(project));
     list.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     list.getSelectionModel().addListSelectionListener(new ListSelectionListenerWithPathUpdaterFactory().create(list, pathLabel));
-    list.addMouseListener(new ListMouseListener(list));
+    // list.addMouseListener(new ListMouseListener(list));
+    final ListMouseListener listMouseListener = new ListMouseListener(list);
+    list.addMouseListener(listMouseListener);
+    list.addMouseWheelListener(listMouseListener);
+    // list.setMaximumSize(new Dimension(1000, 1000));
+    // list.setPreferredSize(list.getSize());
+    // int fileCount = list.getModel().getSize();
     return list;
   }
 
@@ -51,12 +56,80 @@ class ListComponentFactory {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+      // System.out.println("mouseClicked(): Called with event: " + e.getID());
       int index = list.locationToIndex(e.getPoint());
       if (index != -1) {
         list.setSelectedIndex(index);
         TabSwitchProjectComponent.getHandler(project).closeAndOpenSelectedFile();
       }
     }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+      // System.out.println("mouseWheelMoved(): Called with event: " +  e.getID());
+       String message;
+       String newline = "\n";
+       final JBList scrollPane = (JBList) list;
+       int notches = e.getWheelRotation();
+       scrollPane.getScrollableUnitIncrement(scrollPane.getVisibleRect(), SwingConstants.VERTICAL, 1);
+       // if (notches < 0) {
+       //     message = "Mouse wheel moved UP "
+       //                  + -notches + " notch(es)" + newline;
+       // } else {
+       //     message = "Mouse wheel moved DOWN "
+       //                  + notches + " notch(es)" + newline;
+       // }
+       // System.out.println("Notches: " + notches);
+       int unitPixels = scrollPane.getScrollableUnitIncrement(scrollPane.getVisibleRect(), SwingConstants.VERTICAL, notches);
+       int blocksToScroll = scrollPane.getScrollableBlockIncrement(scrollPane.getVisibleRect(), SwingConstants.VERTICAL, 1);
+       Rectangle visibleRect = scrollPane.getVisibleRect();
+       int pixelsToScroll = notches * unitPixels;
+
+       if (e.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
+         // System.out.println("UNIT_SCROLL: Should scroll by " + pixelsToScroll + " px");
+         visibleRect.add(0, pixelsToScroll);
+         // scrollPane.getVisibleRect().add(0, unitsToScroll);
+         int first = scrollPane.getFirstVisibleIndex();
+         int last = scrollPane.getLastVisibleIndex();
+         int length = scrollPane.getItemsCount();
+         int newFirst = first + notches;
+         int newLast = last + notches;
+         if(newFirst < 0) {
+           newFirst = 0;
+         }
+         if(newLast > length - 1) {
+           newLast = length - 1;
+         }
+         scrollPane.ensureIndexIsVisible(newFirst);
+         scrollPane.ensureIndexIsVisible(newLast);
+         // System.out.println("New scroll bounds are indexes " + newFirst + " - " + newLast);
+         // if(newFirst > length - 1) {
+         //   new
+         // }
+         // if(unitsToScroll)
+
+           // message += "    Scroll type: WHEEL_UNIT_SCROLL" + newline;
+           // message += "    Scroll amount: " + e.getScrollAmount()
+           //         + " unit increments per notch" + newline;
+           // message += "    Units to scroll: " + e.getUnitsToScroll()
+           //         + " unit increments" + newline;
+           // message += "    Vertical unit increment: "
+           //     + scrollPane.getScrollableUnitIncrement(scrollPane.getVisibleRect(), SwingConstants.VERTICAL, 1)
+           //     + " pixels" + newline;
+       } else { //scroll type == MouseWheelEvent.WHEEL_BLOCK_SCROLL
+         // System.out.println("BLOCK_SCROLL: Should scroll by " + blocksToScroll + " px");
+           // message += "    Scroll type: WHEEL_BLOCK_SCROLL" + newline;
+           // message += "    Vertical block increment: "
+           //     + scrollPane.getScrollableBlockIncrement(scrollPane.getVisibleRect(), SwingConstants.VERTICAL, 1)
+           //     + " pixels" + newline;
+       }
+       // saySomething(message, e);
+      // System.out.println(message);
+       // final Rectangle newRect =
+       // scrollPane.scrollRectToVisible();
+
+    }
+
   }
 
   /**
@@ -110,7 +183,8 @@ class ListComponentFactory {
     }
 
     private void updatePath(JList list, JLabel path) {
-      path.setText(getPathTextOrEmptyString(path, list.getSelectedValues()));
+      // path.setText(getPathTextOrEmptyString(path, list.getSelectedValues()));
+      path.setText(getPathTextOrEmptyString(path, list.getSelectedValuesList().toArray()));
     }
 
     private String getPathTextOrEmptyString(JLabel path, Object[] selectedValues) {

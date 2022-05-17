@@ -1,4 +1,4 @@
-package org.intellij.ideaplugins.tabswitch.filefetcher;
+package org.intellij.ideaplugins.tabswitchx.filefetcher;
 
 import java.util.List;
 

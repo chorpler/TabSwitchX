@@ -1,4 +1,4 @@
-package org.intellij.ideaplugins.tabswitch.component;
+package org.intellij.ideaplugins.tabswitchx.component;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;

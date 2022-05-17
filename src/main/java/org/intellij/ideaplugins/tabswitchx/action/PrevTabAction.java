@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.intellij.ideaplugins.tabswitch.action;
+package org.intellij.ideaplugins.tabswitchx.action;
 
-import org.intellij.ideaplugins.tabswitch.filefetcher.OpenTabFilesFileFetcher;
+import org.intellij.ideaplugins.tabswitchx.filefetcher.OpenTabFilesFileFetcher;
 
-public class NextTabAction extends ChangeTabAction {
+public class PrevTabAction extends ChangeTabAction {
 
-  protected NextTabAction() {
+  protected PrevTabAction() {
     super(new OpenTabFilesFileFetcher());
   }
 
@@ -30,6 +30,6 @@ public class NextTabAction extends ChangeTabAction {
 
   @Override
   protected boolean moveUp() {
-    return false;
+    return true;
   }
 }

@@ -1,4 +1,4 @@
-package org.intellij.ideaplugins.tabswitch.component;
+package org.intellij.ideaplugins.tabswitchx.component;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

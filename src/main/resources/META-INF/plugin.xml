@@ -1,24 +1,39 @@
-<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<!-- Removed outdated DTD link -->
+<!--<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">-->
 
-<idea-plugin url="https://github.com/luzuojin/TabSwitch">
-  <name>TabSwitchPlus</name>
-  <version>3.1.0</version>
-  <idea-version since-build="141.1532"/>
+<idea-plugin url="https://github.com/chorpler/TabSwitchX">
+  <name>TabSwitchX</name>
+  <version>3.2.0d</version>
+  <idea-version since-build="171.3566.24"/>
 
   <description><![CDATA[
     <h3>
-      Forked from the original <a href="https://plugins.jetbrains.com/plugin/179-tabswitch">Tabswitch</a>
+      <ul>
+        <li>Forked from <a href="https://github.com/luzuojin/TabSwitch">TabSwitchPlus</a>, which was …</li>
+        <li>Forked from the original <a href="https://plugins.jetbrains.com/plugin/179-tabswitch">Tabswitch</a></li>
+      </ul>
     </h3>
-    Open files/tabs switcher to quickly switch between tabs with less keystrokes than
-    Recent Files. Open files are selected from a list in most recently used order, similarly
-    to Alt+Tab in Windows or Ctrl-Tab in Opera. By default the action is mapped to
-    Alt+L, but another popular assignment is CMD+E.
+    Open files/tabs switcher to quickly switch between tabs with fewer keystrokes than
+    <b>Recent Files</b>, and more reliably than built-in tab switcher "Switcher".
+    Open files are selected from a list in most recently used order, similarly
+    to Alt+Tab in Windows or Ctrl-Tab in Opera. By default, the action is mapped to
+    Alt+L (Option+L on MacOS), but another popular assignment is CMD+E, or Ctrl+Tab.
     <br/><br/>
-    Thanks to Timur Zambalayev for the original plugin, Martin Fuhrer for a major contribution in the form of a rewrite and Mark Scott for patching a bug.
+    Thanks to luzuojin for TabSwitchPlus, and to Timur Zambalayev for the original plugin, Martin Fuhrer for a major contribution in the form of a rewrite and Mark Scott for patching a bug.
     <br/><br/>
     ]]>
   </description>
   <change-notes><![CDATA[
+    3.2.0d: Removed max version constraint; now works with IDEA 2022.1.1 and later
+    3.2.0c: Position moved closer to top-center instead of middle-center
+    3.2.0b: Maximum height extended to 30 tabs, after which scrolling is enabled
+    3.2.0: Fork to <b>TabSwitchX</b>
+           - Fix to make switcher dialog work with mouse-wheel scrolling
+    3.1.0: Fork to <b>TabSwitchPlus</b><br/>
+           - Change default select tab on popup view show<br/>
+           - Change prev/next keyboard-shortcut can work with each other<br/>
+           - Change to gradle project<br/>
+           - Fixed some issues<br/>
     3.0.7: Bug-fix: reverse recent files array _before_ checking their validity do be added to list.<br/>
     3.0.6: Remove TabSwitch settings. Is not used anymore.<br/>
     3.0.5: Project is upgraded to use java 7.<br/>
@@ -34,40 +49,40 @@
     2.1.6: RubyMine compatible version.<br><br/>
   ]]></change-notes>
 
-  <vendor url="https://www.github.com/luzuojin" email="luzuojin@gmail.com">luzj</vendor>
+  <vendor url="https://github.com/chorpler" email="chorpler@gmail.com">David S.</vendor>
 
   <project-components>
     <component>
-      <implementation-class>org.intellij.ideaplugins.tabswitch.TabSwitchProjectComponent</implementation-class>
+      <implementation-class>org.intellij.ideaplugins.tabswitchx.TabSwitchProjectComponent</implementation-class>
     </component>
   </project-components>
 
   <actions>
     <action
-      id="org.intellij.ideaplugins.tabswitch.action.NextTabAction"
-      class="org.intellij.ideaplugins.tabswitch.action.NextTabAction"
+      id="org.intellij.ideaplugins.tabswitchx.action.NextTabAction"
+      class="org.intellij.ideaplugins.tabswitchx.action.NextTabAction"
       text="Next tab">
-      <keyboard-shortcut first-keystroke="alt L" keymap="$default"/>
+      <keyboard-shortcut first-keystroke="ctrl TAB" keymap="$default"/>
     </action>
     <action
-      id="org.intellij.ideaplugins.tabswitch.action.PrevTabAction"
-      class="org.intellij.ideaplugins.tabswitch.action.PrevTabAction"
+      id="org.intellij.ideaplugins.tabswitchx.action.PrevTabAction"
+      class="org.intellij.ideaplugins.tabswitchx.action.PrevTabAction"
       text="Previous tab">
-      <keyboard-shortcut first-keystroke="alt P" keymap="$default"/>
+      <keyboard-shortcut first-keystroke="ctrl shift TAB" keymap="$default"/>
     </action>
     <action
       id="TabSwitchPlugin.NextVcsChangeAction"
-      class="org.intellij.ideaplugins.tabswitch.action.NextVcsChangeAction"
+      class="org.intellij.ideaplugins.tabswitchx.action.NextVcsChangeAction"
       text="Next VCS change tab">
     </action>
     <action
       id="TabSwitchPlugin.PrevVcsChangeAction"
-      class="org.intellij.ideaplugins.tabswitch.action.PrevVcsChangeAction"
+      class="org.intellij.ideaplugins.tabswitchx.action.PrevVcsChangeAction"
       text="Previous VCS change tab">
     </action>
     <action
       id="TabSwitchPlugin.SwitchTab"
-      class="org.intellij.ideaplugins.tabswitch.action.SwitchTabAction"
+      class="org.intellij.ideaplugins.tabswitchx.action.SwitchTabAction"
       text="Switch Between Two Tabs (No UI, No Keyboard Modifier Needed)">
     </action>
   </actions>

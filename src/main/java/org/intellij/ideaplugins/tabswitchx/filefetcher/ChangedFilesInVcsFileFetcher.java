@@ -1,4 +1,4 @@
-package org.intellij.ideaplugins.tabswitch.filefetcher;
+package org.intellij.ideaplugins.tabswitchx.filefetcher;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,7 +38,8 @@ public class ChangedFilesInVcsFileFetcher implements FileFetcher<VirtualFile> {
   @Override
   public List<VirtualFile> getFiles(Project project) {
     List<VirtualFile> changedFiles = new ArrayList<>();
-    int editorTabLimit = UISettings.getInstance().EDITOR_TAB_LIMIT;
+    // int editorTabLimit = UISettings.getInstance().EDITOR_TAB_LIMIT;
+    int editorTabLimit = UISettings.getInstance().getEditorTabLimit();
     int i = 0;
     for (Change change : getChanges(project)) {
       VirtualFile virtualFile = change.getVirtualFile();

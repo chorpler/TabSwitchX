@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.intellij.ideaplugins.tabswitch.action;
+package org.intellij.ideaplugins.tabswitchx.action;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -53,6 +53,7 @@ public class SwitchTabAction extends AnAction implements DumbAware {
   }
 
   private boolean canShowRecentFiles() {
-    return UISettings.getInstance().EDITOR_TAB_LIMIT > 0;
+    // return UISettings.getInstance().EDITOR_TAB_LIMIT > 0;
+    return UISettings.getInstance().getEditorTabLimit() > 0;
   }
 }

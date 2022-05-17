@@ -1,6 +1,6 @@
-package org.intellij.ideaplugins.tabswitch.action;
+package org.intellij.ideaplugins.tabswitchx.action;
 
-import org.intellij.ideaplugins.tabswitch.filefetcher.ChangedFilesInVcsFileFetcher;
+import org.intellij.ideaplugins.tabswitchx.filefetcher.ChangedFilesInVcsFileFetcher;
 
 public class PrevVcsChangeAction extends ChangeTabAction {
 
@@ -10,6 +10,7 @@ public class PrevVcsChangeAction extends ChangeTabAction {
 
   @Override
   protected boolean moveUp() {
+    /* Move up in list */
     return true;
   }
 }
