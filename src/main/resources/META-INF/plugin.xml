@@ -3,8 +3,10 @@
 
 <idea-plugin url="https://github.com/chorpler/TabSwitchX">
   <name>TabSwitchX</name>
-  <version>3.2.0d</version>
-  <idea-version since-build="171.3566.24"/>
+  <version>3.2.0e</version>
+  <idea-version since-build="203.5981.155"/>
+<!--  <idea-version since-build="171.3566.24"/>-->
+
 
   <description><![CDATA[
     <h3>
@@ -56,6 +58,10 @@
       <implementation-class>org.intellij.ideaplugins.tabswitchx.TabSwitchProjectComponent</implementation-class>
     </component>
   </project-components>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <notificationGroup id="TabSwitchX Group" displayType="BALLOON" key="org.intellij.ideaplugins.tabswitchx"/>
+  </extensions>
 
   <actions>
     <action
