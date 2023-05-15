@@ -3,7 +3,7 @@
 
 <idea-plugin url="https://github.com/chorpler/TabSwitchX">
   <name>TabSwitchX</name>
-  <version>3.2.0e</version>
+  <version>3.2.1</version>
   <idea-version since-build="203.5981.155"/>
 <!--  <idea-version since-build="171.3566.24"/>-->
 
@@ -26,6 +26,8 @@
     ]]>
   </description>
   <change-notes><![CDATA[
+    3.2.1: Added indicator for unsaved editor tabs
+    3.2.0e: Fixed width creeping up by 18 pixels with each instantiation; minimum version now 2020.3
     3.2.0d: Removed max version constraint; now works with IDEA 2022.1.1 and later
     3.2.0c: Position moved closer to top-center instead of middle-center
     3.2.0b: Maximum height extended to 30 tabs, after which scrolling is enabled

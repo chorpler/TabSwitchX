@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'org.intellij.ideaplugins'
-version '3.2.0e'
+version '3.2.1'
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
@@ -13,6 +13,7 @@ intellij {
 
 patchPluginXml {
     changeNotes = """
+    3.2.1: Added indicator for unsaved editor tabs
     3.2.0e: Fixed width creeping up by 18 pixels with each instantiation; minimum version now 2020.3
     3.2.0d: Removed max version constraint; now works with IDEA 2022.1.1 and later
     3.2.0c: Position moved closer to top-center instead of middle-center
