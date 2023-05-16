@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.intellij.openapi.editor.markup.EffectType;
 import com.intellij.openapi.editor.markup.TextAttributes;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Iconable;
 import com.intellij.openapi.vcs.FileStatusManager;
@@ -149,7 +150,10 @@ class ListComponentFactory {
                                              boolean selected,
                                              boolean hasFocus) {
           setIcon(IconUtil.getIcon(file, Iconable.ICON_FLAG_READ_STATUS, project));
-          append(file.getName(), SimpleTextAttributes.fromTextAttributes(new TextAttributes(getForegroundColor(file, project),
+		  boolean isModified = FileDocumentManager.getInstance().isFileModified(file);
+		  // String status = isModified ? "(*) " : "";
+		  String status = isModified ? "*" : "";
+          append(status + file.getName(), SimpleTextAttributes.fromTextAttributes(new TextAttributes(getForegroundColor(file, project),
                                                                                             null,
                                                                                             null,
                                                                                             EffectType.LINE_UNDERSCORE,
