@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 import org.javatuples.Pair;
 
-import static org.intellij.ideaplugins.tabswitchx.utilities.ConsoleColors.*;
 import static org.intellij.ideaplugins.tabswitchx.utilities.LogUtilities.setDebug;
 import static org.intellij.ideaplugins.tabswitchx.utilities.LogUtilities.log;
 import static org.intellij.ideaplugins.tabswitchx.utilities.LogUtilities.logDbg;
