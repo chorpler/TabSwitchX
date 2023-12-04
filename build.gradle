@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'org.intellij.ideaplugins'
-version '3.2.1'
+version '3.3.0'
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
@@ -13,6 +13,7 @@ intellij {
 
 patchPluginXml {
     changeNotes = """
+    3.3.0: Add parent directories to file label if necessary for deduplication
     3.2.1: Added indicator for unsaved editor tabs
     3.2.0e: Fixed width creeping up by 18 pixels with each instantiation; minimum version now 2020.3
     3.2.0d: Removed max version constraint; now works with IDEA 2022.1.1 and later
@@ -47,4 +48,9 @@ allprojects {
         mavenLocal()
         mavenCentral()
     }
+}
+
+dependencies {
+    implementation 'org.testng:testng:7.7.0'
+    implementation 'org.javatuples:javatuples:1.2'
 }
