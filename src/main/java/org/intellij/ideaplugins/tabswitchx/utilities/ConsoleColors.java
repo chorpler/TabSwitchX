@@ -4,6 +4,7 @@ public class ConsoleColors {
   // Reset
   public static final String RESET = "\033[0m";  // Text Reset
   public static final String NC = RESET;
+  public static final String NORMAL = RESET;
 
   // Styles
   public static final String BOLD = "\033[1m";
