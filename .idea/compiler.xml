@@ -3,6 +3,9 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="11" />
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_STRING" value="-Xlint:unchecked -Xlint:deprecation" />
+  </component>
   <component name="TypeScriptCompiler">
     <option name="recompileOnChanges" value="true" />
     <option name="typeScriptCompilerParams" value="--sourceMap true" />
