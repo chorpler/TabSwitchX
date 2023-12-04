@@ -1,5 +1,10 @@
 package org.intellij.ideaplugins.tabswitchx.utilities;
 
+/**
+ * Defines ANSI codes for various terminal colors and styles.
+ * Can be used as:
+ * {@code System.out.println(RED + "An error occurred" + NC);}
+ */
 public class ConsoleColors {
   // Reset
   public static final String RESET = "\033[0m";  // Text Reset
