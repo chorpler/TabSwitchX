@@ -16,3 +16,12 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+# MacOS files
+.DS_Store
+.DocumentRevisions-V100
+.Spotlight-V100
+.Trashes
+
+# Windows files
+Thumbs.db
