@@ -108,8 +108,9 @@ public class ConsoleColors {
   public static final String DEBUG2 = MAGENTA+BOLD;
   public static final String DEBUG3 = MAGENTA+ITALIC;
   public static final String DEBUG4 = MAGENTA+BOLD+ITALIC;
-  public static final String INFO = CYAN;
+  public static final String INFO = NC;
   public static final String ERR = ERROR;
   public static final String WARN = WARNING;
   public static final String ALERT = INFO;
+  public static final String LOG = INFO;
 }
