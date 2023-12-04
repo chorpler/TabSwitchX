@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.intellij.openapi.fileEditor.FileEditorManager;
 import org.intellij.ideaplugins.tabswitchx.TabSwitchProjectComponent;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,17 +26,44 @@ import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.components.JBList;
 import com.intellij.util.IconUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import org.javatuples.Pair;
+
+import org.intellij.ideaplugins.tabswitchx.filefetcher.OpenTabFilesFileFetcher;
+import static org.intellij.ideaplugins.tabswitchx.utilities.LogUtilities.logWarn;
+import static org.intellij.ideaplugins.tabswitchx.utilities.LogUtilities.logDbg;
+
 class ListComponentFactory {
 
-  private final Project project;
+  private Project project;
 
   ListComponentFactory(Project project) {
     this.project = project;
   }
 
-  public JList create(JLabel pathLabel) {
+  public JList create(JLabel pathLabel, Project project) {
     JList list = new JBList();
-    list.setCellRenderer(new ListCellRendererWithColorFactory().create(project));
+    if(project != null) {
+      this.project = project;
+    } else {
+      logWarn("ListComponentFactory: project was null!");
+    }
+    OpenTabFilesFileFetcher otf = new OpenTabFilesFileFetcher();
+    List<VirtualFile> allFiles = otf.getFiles(this.project);
+    FileEditorManager manager = FileEditorManager.getInstance(project);
+    VirtualFile[] openFiles = manager.getOpenFiles();
+    List<VirtualFile> openFileList = Arrays.asList(openFiles);
+    logDbg("ListComponentFactory: FileEditorManager says open files count is: " + openFileList.size());
+    // List<VirtualFile> allFiles = new ArrayList<>(Arrays.asList(openFiles));
+    List<String> allFileNames = new ArrayList<>(allFiles.size());
+    for(VirtualFile f : allFiles) {
+      allFileNames.add(f.getName());
+    }
+    logDbg("ListComponentFactory: all " + allFileNames.size() + " open files is: [ " + String.join(", ", allFileNames) + " ]");
+    // list.setCellRenderer(new ListCellRendererWithColorFactory(project).create(project, allFiles));
+    list.setCellRenderer(new ListCellRendererWithColorFactory(project).create());
     list.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     list.getSelectionModel().addListSelectionListener(new ListSelectionListenerWithPathUpdaterFactory().create(list, pathLabel));
     // list.addMouseListener(new ListMouseListener(list));
@@ -138,10 +166,20 @@ class ListComponentFactory {
    */
   private static class ListCellRendererWithColorFactory {
 
-    private ListCellRendererWithColorFactory() {
+    private static Project theProject;
+
+    private ListCellRendererWithColorFactory(Project project) {
+      theProject = project;
     }
 
-    ListCellRenderer create(final Project project) {
+    // private ListCellRendererWithColorFactory() {
+    // }
+
+    ListCellRenderer create() {
+      // FileDocumentManager fdm = FileDocumentManager.getInstance();
+      OpenTabFilesFileFetcher otf = new OpenTabFilesFileFetcher();
+      List<Pair<VirtualFile,String>> allLabeledFiles = otf.getLabeledFiles(theProject);
+      logDbg("ListCellRenderer.create(): Called with " + allLabeledFiles.size() + " tabs");
       return new ColoredListCellRenderer<VirtualFile>() {
         @Override
         protected void customizeCellRenderer(JList list,
@@ -149,11 +187,15 @@ class ListComponentFactory {
                                              int index,
                                              boolean selected,
                                              boolean hasFocus) {
-          setIcon(IconUtil.getIcon(file, Iconable.ICON_FLAG_READ_STATUS, project));
+          setIcon(IconUtil.getIcon(file, Iconable.ICON_FLAG_READ_STATUS, theProject));
 		  boolean isModified = FileDocumentManager.getInstance().isFileModified(file);
 		  // String status = isModified ? "(*) " : "";
 		  String status = isModified ? "*" : "";
-          append(status + file.getName(), SimpleTextAttributes.fromTextAttributes(new TextAttributes(getForegroundColor(file, project),
+      String displayName = otf.getFileLabel(theProject, file);
+      String displayLabel = status + displayName;
+      String filePath = file.getPath();
+      logDbg("For file '" + filePath + "', unique name is: " + displayName);
+          append(displayLabel, SimpleTextAttributes.fromTextAttributes(new TextAttributes(getForegroundColor(file, theProject),
                                                                                             null,
                                                                                             null,
                                                                                             EffectType.LINE_UNDERSCORE,
