@@ -12,7 +12,7 @@ public final class Components {
   }
 
   public static JList newList(Project project, JLabel pathLabel) {
-    return new ListComponentFactory(project).create(pathLabel);
+    return new ListComponentFactory(project).create(pathLabel, project);
   }
 
   public static JComponent newListFooter(JLabel pathLabel) {
