@@ -18,7 +18,10 @@ public class OpenTabFilesFileFetcher implements FileFetcher<VirtualFile> {
   @Override
   public List<VirtualFile> getFiles(Project project) {
     FileEditorManager fileEditorManager = FileEditorManager.getInstance(project);
-    return getOpenFiles(fileEditorManager, ArrayUtil.reverseArray(EditorHistoryManager.getInstance(project).getFiles()));
+    EditorHistoryManager editorHistoryManager = EditorHistoryManager.getInstance(project);
+    List<VirtualFile> virtualFiles = editorHistoryManager.getFileList();
+    // System.out.println("OpenTabFiesFileFetcher.getFiles(): Found " + virtualFiles.size() + " open files");
+    return getOpenFiles(fileEditorManager, ArrayUtil.reverseArray(virtualFiles.toArray(VirtualFile[]::new)));
   }
 
   private List<VirtualFile> getOpenFiles(FileEditorManager fileEditorManager, VirtualFile[] recentFiles) {
