@@ -276,22 +276,17 @@ public class ListUtilities {
         String originalFilePath = file.getPath();
         int index = allFiles.indexOf(file);
         logDbg("getUniqueFilename(): file '" + originalFilePath + "' is at index " + index);
-        // List<File> allFilesCloned = allFiles.stream().map(f -> new File(f.getPath())).collect(Collectors.toList());
         List<File> allFilesCloned = trimCommonPrefix(allFiles);
         File newFile = allFilesCloned.get(index);
         String filePath = newFile.getPath();
         logDbg("getUniqueFilename(): new file '" + filePath + "' is at new index " + index);
-        // Set<String> allFilePaths = allFilesCloned.stream().map(f -> f.getPath()).collect(Collectors.toSet());
         List<String> allFilePaths = allFilesCloned.stream().map(f -> f.getPath()).collect(Collectors.toList());
-        // List<String> allFileNames = allFilesCloned.stream().map(f -> f.getName()).collect(Collectors.toList());
         List<String> allFileNames = allFilePaths;
         logDbg("getUniqueFilename(): List of filenames:\n" + stringifyList(allFileNames) + "\n\n");
 
         VirtualFile parent = file.getParent();
         String uniqueFileName = fileName;
 
-        // while(parent != null) {
-        // Keep prepending parent directory names until the file name is unique
         int depth = 1;
         while (isDuplicate(uniqueFileName, allFileNames) && uniqueFileName != filePath) {
             logDbg3("getUniqueFilename(): start iteration " + depth + ", uniqueFileName=" + uniqueFileName + ", list of filenames:\n" + stringifyList(allFileNames) + "\n");
@@ -300,20 +295,11 @@ public class ListUtilities {
                 break;
             }
             int i = allFileNames.indexOf(uniqueFileName);
-            // uniqueFileName = parent.getName() + File.separator + uniqueFileName;
-            // if(!isDuplicate4(uniqueFileName, allFileNames)) {
-            //     break;
-            // }
             uniqueFileName = getNamePlus(file, depth);
-            // fileName = uniqueFileName;
             parent = parent.getParent();
-            // allFileNames.set(i, uniqueFileName);
             logDbg3("getUniqueFilename(): end iteration " + depth + ", uniqueFileName=" + uniqueFileName + ", list of filenames:\n" + stringifyList(allFileNames) + "\n\n");
             depth++;
         }
-        // if(parent == null) {
-        // }
-
         logDbg("getUniqueFilename(): Returning unique file name '" + uniqueFileName + "'" + "\n\n");
         return uniqueFileName;
     }
@@ -326,7 +312,6 @@ public class ListUtilities {
      */
     public static List<Pair<VirtualFile,String>> generateLabels(List<VirtualFile> files) {
         logDbg("generateLabels(): Incoming file list:\n" + stringifyListVirtualFiles(files));
-        // List<File> filesCopy = files.stream().map(f -> new File(f.getPath())).collect(Collectors.toList());
         List<File> filesCopy = trimCommonPrefix(files);
         logDbg("\ngenerateLabels(): Trimmed file list:\n" + stringifyListFiles(filesCopy) + "\n\n");
         List<String> fileLabels = new ArrayList<>();
@@ -338,7 +323,6 @@ public class ListUtilities {
             fileLabels.add(uniqueName);
             logDbg("generateLabels(): iteration " + i + " FINAL, current file labels:\n" + stringifyList(fileLabels) + "\n\n");
         }
-        // List<File> newFiles = fileLabels.stream().map(f -> new File(f)).collect(Collectors.toList());
         logDbg("\ngenerateLabels(): Outgoing file labels:\n" + stringifyList(fileLabels));
         List<Pair<VirtualFile,String>> labeledFiles = new ArrayList<>(files.size());
         for(VirtualFile f : files) {
@@ -550,17 +534,13 @@ public class ListUtilities {
         File newFile = allFilesCloned.get(index);
         String filePath = newFile.getPath();
         logDbg("getUniqueFilenameFile(): new file '" + filePath + "' is at new index " + index);
-        // Set<String> allFilePaths = allFilesCloned.stream().map(f -> f.getPath()).collect(Collectors.toSet());
         List<String> allFilePaths = allFilesCloned.stream().map(f -> f.getPath()).collect(Collectors.toList());
-        // List<String> allFileNames = allFilesCloned.stream().map(f -> f.getName()).collect(Collectors.toList());
         List<String> allFileNames = allFilePaths;
         logDbg("getUniqueFilenameFile(): List of filenames:\n" + stringifyList(allFileNames) + "\n\n");
 
         File parent = file.getParentFile();
         String uniqueFileName = fileName;
 
-        // while(parent != null) {
-        // Keep prepending parent directory names until the file name is unique
         int depth = 1;
         while (isDuplicateFile(uniqueFileName, allFileNames) && uniqueFileName != filePath) {
             logDbg3("getUniqueFilenameFile(): start iteration " + depth + ", uniqueFileName=" + uniqueFileName + ", list of filenames:\n" + stringifyList(allFileNames) + "\n");
@@ -569,20 +549,11 @@ public class ListUtilities {
                 break;
             }
             int i = allFileNames.indexOf(uniqueFileName);
-            // uniqueFileName = parent.getName() + File.separator + uniqueFileName;
-            // if(!isDuplicate4(uniqueFileName, allFileNames)) {
-            //     break;
-            // }
             uniqueFileName = getFileNamePlus(file, depth);
-            // fileName = uniqueFileName;
             parent = parent.getParentFile();
-            // allFileNames.set(i, uniqueFileName);
             logDbg3("getUniqueFilenameFile(): end iteration " + depth + ", uniqueFileName=" + uniqueFileName + ", list of filenames:\n" + stringifyList(allFileNames) + "\n\n");
             depth++;
         }
-        // if(parent == null) {
-        // }
-
         logDbg("getUniqueFilenameFile(): Returning unique file name '" + uniqueFileName + "'" + "\n\n");
         return uniqueFileName;
     }
@@ -611,10 +582,5 @@ public class ListUtilities {
         List<File> newFiles = fileLabels.stream().map(f -> new File(f)).collect(Collectors.toList());
         logDbg("\ngenerateLabelsFile(): Outgoing file labels:\n" + stringifyListFiles(newFiles));
         return newFiles;
-//        List<String> fileNames = files.stream().map(f -> f.getPath()).collect(Collectors.toList());
-//        for(String fn : fileNames) {
-//            String newfn = getUniqueFilename3(fn, fileNames);
-//        }
-//        return files;
     }
 }
