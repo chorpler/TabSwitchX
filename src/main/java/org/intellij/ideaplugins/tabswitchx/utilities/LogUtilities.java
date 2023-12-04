@@ -66,7 +66,7 @@ public class LogUtilities {
 
   public static void log(String... args) {
     String result = String.join(" ", args);
-    String color = NC;
+    String color = INFO;
     System.err.println(color + result + NC);
   }
 
